@@ -1,0 +1,26 @@
+PODS:
+  - Alamofire (4.3.0)
+  - AlamofireObjectMapper (4.0.1):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 2.0)
+  - Kingfisher (3.2.4)
+  - ObjectMapper (2.2.2)
+  - ReachabilitySwift (3)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.3)
+  - AlamofireObjectMapper (~> 4.0)
+  - Kingfisher (~> 3.0)
+  - ObjectMapper (~> 2.2)
+  - ReachabilitySwift
+
+SPEC CHECKSUMS:
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  AlamofireObjectMapper: 842d2eed43a4d0593ff0110d54ac86a170c4519c
+  Kingfisher: 8d80f39da403cd9c9ee11984e1655f4d6a566cdb
+  ObjectMapper: 9e385c2295bcc4e16eabbcfc85db801442bba545
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+
+PODFILE CHECKSUM: 2e8bcc00341e43b96462b6de6752956b824baa72
+
+COCOAPODS: 1.2.0.rc.1
