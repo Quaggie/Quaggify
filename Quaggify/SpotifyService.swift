@@ -586,12 +586,14 @@ class SpotifyService: NSObject {
                 self?.createNewPlaylist(name: name, completion: completion)
               }
             }
+            break
           } else if statusCode == 403 {
             completion(nil, "You need to update spotify's permission on login to create a playist ):")
+            break
           } else if statusCode == 400 {
             completion(nil, "Bad request")
+            break
           }
-          break
         }
         completion(playlist, nil)
         break

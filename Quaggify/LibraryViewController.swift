@@ -170,8 +170,10 @@ extension LibraryViewController {
             Alert.shared.show(title: "Error", message: "Error communicating with the server")
           } else if let playlist = playlist {
             if self?.playlists[safe: 1] != nil {
-              self?.playlists.insert(playlist, at: 1)
-              self?.collectionView.reloadData()
+              self?.collectionView.performBatchUpdates({
+                self?.playlists.insert(playlist, at: 1)
+                self?.collectionView.insertItems(at: [IndexPath(item: 1, section: 0)])
+              }, completion: nil)
             }
           }
         }
