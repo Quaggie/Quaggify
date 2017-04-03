@@ -67,6 +67,16 @@ class LibraryViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
+  
+  // MARK: Layout
+  override func setupViews() {
+    super.setupViews()
+    navigationItem.title = "Your Library".uppercased()
+    navigationItem.rightBarButtonItem = logoutButton
+    
+    view.addSubview(collectionView)
+    collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+  }
 }
 
 // MARK: Actions
@@ -108,6 +118,7 @@ extension LibraryViewController {
       strongSelf.offset += strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let items = spotifyObject?.items {
         strongSelf.playlists.append(contentsOf: items)
@@ -132,6 +143,7 @@ extension LibraryViewController {
       strongSelf.offset = strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let items = spotifyObject?.items {
         strongSelf.playlists.removeAll()
@@ -153,6 +165,7 @@ extension LibraryViewController {
       if let textfield = alertController.textFields?.first, let playlistName = textfield.text {
         API.createNewPlaylist(name: playlistName) { [weak self] (playlist, error) in
           if let error = error {
+            print(error)
             // Showing error message
             Alert.shared.show(title: "Error", message: "Error communicating with the server")
           } else if let playlist = playlist {
@@ -178,18 +191,6 @@ extension LibraryViewController {
         createAction.isEnabled = false
       }
     }
-  }
-}
-
-// MARK: Layout
-extension LibraryViewController {
-  override func setupViews() {
-    super.setupViews()
-    navigationItem.title = "Your Library".uppercased()
-    navigationItem.rightBarButtonItem = logoutButton
-    
-    view.addSubview(collectionView)
-    collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
   }
 }
 

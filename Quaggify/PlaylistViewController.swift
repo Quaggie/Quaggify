@@ -59,10 +59,8 @@ class PlaylistViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
-}
-
-// MARK: Layout
-extension PlaylistViewController {
+  
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     
@@ -85,6 +83,7 @@ extension PlaylistViewController {
       strongSelf.offset += strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let spotifyObject = spotifyObject, let items = spotifyObject.items {
         if strongSelf.spotifyObject == nil {
@@ -100,12 +99,13 @@ extension PlaylistViewController {
   }
   
   func removeFromPlaylist (track: Track?, position: Int?) {
-    print("Removing track \(track?.name) on position \(position)")
+    print("Removing track \(track?.name ?? "(Null)") on position \(position ?? 0)")
     API.removePlaylistTrack(track: track, position: position, playlist: playlist) { [weak self] (snapshotId, error) in
       guard let strongSelf = self else {
         return
       }
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let snapshotId = snapshotId {
         

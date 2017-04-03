@@ -106,10 +106,8 @@ class TrackViewController: ViewController {
     }
     view.layoutIfNeeded()
   }
-}
-
-// MARK: Layout
-extension TrackViewController {
+  
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     
@@ -132,7 +130,10 @@ extension TrackViewController {
     
     addToPlaylistButton.anchor(subTitleLabel.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
   }
-  
+}
+
+// MARK: Layout
+extension TrackViewController {
   func setPortraitLayout () {
     stackView.axis = .vertical
   }
@@ -158,6 +159,7 @@ extension TrackViewController {
         return
       }
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let trackResponse = trackResponse {
         strongSelf.track = trackResponse

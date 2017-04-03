@@ -52,10 +52,8 @@ class AlbumsViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
-}
-
-// MARK: Layout
-extension AlbumsViewController {
+  
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     

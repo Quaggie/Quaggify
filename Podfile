@@ -8,7 +8,7 @@ target 'Quaggify' do
   pod 'AlamofireObjectMapper', '~> 4.0'
   pod 'ObjectMapper', '~> 2.2'
   pod 'ReachabilitySwift'
-  pod 'Kingfisher', '~> 3.0'
+  pod 'Kingfisher', '~> 3.4.0'
 
   # Pods for Quaggify
 

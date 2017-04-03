@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/13.
 //
-//  Copyright (c) 2016 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2017 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -71,6 +71,9 @@ extension Kingfisher where Base: UIButton {
             with: resource,
             options: options,
             progressBlock: { receivedSize, totalSize in
+                guard resource.downloadURL == self.webURL(for: state) else {
+                    return
+                }
                 if let progressBlock = progressBlock {
                     progressBlock(receivedSize, totalSize)
                 }
@@ -99,7 +102,7 @@ extension Kingfisher where Base: UIButton {
      Nothing will happen if the downloading has already finished.
      */
     public func cancelImageDownloadTask() {
-        imageTask?.downloadTask?.cancel()
+        imageTask?.cancel()
     }
     
     /**
@@ -142,6 +145,9 @@ extension Kingfisher where Base: UIButton {
             with: resource,
             options: options,
             progressBlock: { receivedSize, totalSize in
+                guard resource.downloadURL == self.backgroundWebURL(for: state) else {
+                    return
+                }
                 if let progressBlock = progressBlock {
                     progressBlock(receivedSize, totalSize)
                 }
@@ -168,7 +174,7 @@ extension Kingfisher where Base: UIButton {
      Nothing will happen if the downloading has already finished.
      */
     public func cancelBackgroundImageDownloadTask() {
-        backgroundImageTask?.downloadTask?.cancel()
+        backgroundImageTask?.cancel()
     }
 
 }

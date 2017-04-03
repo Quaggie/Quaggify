@@ -436,8 +436,8 @@
 				TargetAttributes = {
 					E09CE8551E409C9B002BF3F8 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 7397PXU582;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = ZPEUGUU6JH;
+						ProvisioningStyle = Manual;
 					};
 					E09CE86C1E409C9B002BF3F8 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -773,11 +773,14 @@
 			baseConfigurationReference = AD950247F2477E6A23B4B79C /* Pods-Quaggify.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 7397PXU582;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZPEUGUU6JH;
 				INFOPLIST_FILE = Quaggify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.Quaggify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.quaggify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f9d80934-d4ad-4bda-9543-9fc651be6251";
+				PROVISIONING_PROFILE_SPECIFIER = Quaggify;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -787,11 +790,14 @@
 			baseConfigurationReference = 526120323A5F789102AA38D1 /* Pods-Quaggify.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 7397PXU582;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZPEUGUU6JH;
 				INFOPLIST_FILE = Quaggify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.Quaggify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.quaggify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1b01e606-088c-4655-920f-c22b11766a19";
+				PROVISIONING_PROFILE_SPECIFIER = Quaggify;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

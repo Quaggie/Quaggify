@@ -113,6 +113,13 @@ class SearchViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
+    
+  override func setupViews() {
+    super.setupViews()
+    navigationItem.titleView = searchController.searchBar
+    
+    setupCollectionView()
+  }
 }
 
 // MARK: Actions
@@ -134,13 +141,6 @@ extension SearchViewController {
 
 // MARK: Layout
 extension SearchViewController {
-  override func setupViews() {
-    super.setupViews()
-    navigationItem.titleView = searchController.searchBar
-    
-    setupCollectionView()
-  }
-  
   func setupCollectionView () {
     view.addSubview(collectionView)
     

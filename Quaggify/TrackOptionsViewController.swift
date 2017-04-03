@@ -76,16 +76,17 @@ class TrackOptionsViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
-}
-
-// MARK: Layout
-extension TrackOptionsViewController {
+  
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     view.addSubview(collectionView)
     
     collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
   }
+}
+
+extension TrackOptionsViewController {
   
   func setupNavigationBar () {
     navigationController?.navigationBar.barTintColor = ColorPalette.white
@@ -117,6 +118,7 @@ extension TrackOptionsViewController {
       strongSelf.offset += strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let items = spotifyObject?.items {
         if strongSelf.sections[safe: 1] != nil {
@@ -140,12 +142,14 @@ extension TrackOptionsViewController {
       if let textfield = alertController.textFields?.first, let playlistName = textfield.text {
         API.createNewPlaylist(name: playlistName) { [weak self] (playlist, error) in
           if let error = error {
+            print(error)
             // Showing error message
             Alert.shared.show(title: "Error", message: "Error communicating with the server")
           } else if let playlist = playlist {
             // Adding track to palylist
             API.addTrackToPlaylist(track: track, playlist: playlist) { [weak self] (snapshotId, error) in
               if let error = error {
+                print(error)
                 // Showing error message
                 Alert.shared.show(title: "Error", message: "Error communicating with the server")
               } else if let _ = snapshotId {
@@ -179,6 +183,7 @@ extension TrackOptionsViewController {
   func addTrackToPlaylist(playlist: Playlist?) {
     API.addTrackToPlaylist(track: track, playlist: playlist) { [weak self] (snapshotId, error) in
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let _ = snapshotId {
         self?.dismiss(animated: true) {

@@ -56,6 +56,7 @@ class AlbumViewController: ViewController {
     fetchTracks()
   }
   
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     
@@ -82,6 +83,7 @@ extension AlbumViewController {
       strongSelf.offset += strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let spotifyObject = spotifyObject, let items = spotifyObject.items {
         if strongSelf.spotifyObject == nil {

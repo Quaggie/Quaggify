@@ -56,10 +56,8 @@ class HomeViewController: ViewController {
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
     collectionView.collectionViewLayout.invalidateLayout()
   }
-}
-
-// MARK: Layout
-extension HomeViewController {
+  
+  // MARK: Layout
   override func setupViews() {
     super.setupViews()
     navigationItem.title = "Home".uppercased()
@@ -86,6 +84,7 @@ extension HomeViewController {
       strongSelf.offset += strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let spotifyObject = spotifyObject, let items = spotifyObject.items {
         if strongSelf.spotifyObject == nil {
@@ -116,6 +115,7 @@ extension HomeViewController {
       strongSelf.offset = strongSelf.limit
       
       if let error = error {
+        print(error)
         Alert.shared.show(title: "Error", message: "Error communicating with the server")
       } else if let spotifyObject = spotifyObject, let items = spotifyObject.items {
         if strongSelf.spotifyObject == nil {
