@@ -9,10 +9,6 @@
 import UIKit
 
 class PlaylistHeaderView: UICollectionReusableView {
-  static var identifier: String {
-    return String(describing: self)
-  }
-  
   var playlist: Playlist? {
     didSet {
       guard let playlist = playlist else {

@@ -40,6 +40,7 @@ class AlbumsViewController: ViewController {
     cv.delegate = self
     cv.dataSource = self
     cv.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.identifier)
+    cv.register(LoadingFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier)
     return cv
   }()
 
@@ -120,12 +121,30 @@ extension AlbumsViewController: UICollectionViewDataSource {
     }
     return UICollectionViewCell()
   }
+  
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    switch kind {
+    case UICollectionElementKindSectionFooter:
+      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+        return footerView
+      }
+    default: break
+    }
+    return UICollectionReusableView()
+  }
 }
 
 // MARK: UICollectionViewDelegateFlowLayout
 extension AlbumsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: view.frame.width - (contentInset * 2), height: 72)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    if spotifyObject?.next != nil {
+      return CGSize(width: view.frame.width, height: 36)
+    }
+    return .zero
   }
 }
 

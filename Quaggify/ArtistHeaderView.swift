@@ -9,11 +9,6 @@
 import UIKit
 
 class ArtistHeaderView: UICollectionReusableView {
-  
-  static var identifier: String {
-    return String(describing: self)
-  }
-  
   var artist: Artist? {
     didSet {
       guard let artist = artist else {

@@ -43,6 +43,7 @@ class HomeViewController: ViewController {
     cv.dataSource = self
     cv.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.identifier)
     cv.register(SearchHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SearchHeaderView.identifier)
+    cv.register(LoadingFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier)
     return cv
   }()
   
@@ -172,6 +173,10 @@ extension HomeViewController: UICollectionViewDataSource {
         headerView.title = "New Releases"
         return headerView
       }
+    case UICollectionElementKindSectionFooter:
+      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+        return footerView
+      }
     default: break
     }
     return UICollectionReusableView()
@@ -188,6 +193,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     if spotifyObject?.items?.count ?? 0 > 0 {
       return CGSize(width: view.frame.width, height: 72)
+    }
+    return .zero
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    if spotifyObject?.next != nil {
+      return CGSize(width: view.frame.width, height: 36)
     }
     return .zero
   }

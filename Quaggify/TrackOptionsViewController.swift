@@ -63,6 +63,7 @@ class TrackOptionsViewController: ViewController {
     cv.dataSource = self
     cv.register(PlaylistCell.self, forCellWithReuseIdentifier: PlaylistCell.identifier)
     cv.register(SearchHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SearchHeaderView.identifier)
+    cv.register(LoadingFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier)
     return cv
   }()
 
@@ -104,6 +105,16 @@ extension TrackOptionsViewController {
 extension TrackOptionsViewController {
   func dismissModal () {
     dismiss(animated: true, completion: nil)
+//    if let tabBarVC = presentingViewController as? TabBarController, let navVC = tabBarVC.selectedViewController as? NavigationController {
+//      if let vc = navVC.childViewControllers.last {
+//        print(vc)
+//        vc.dismiss(animated: true, completion: nil)
+//      } else {
+//        dismiss(animated: true, completion: nil)
+//      }
+//    } else {
+//      dismiss(animated: true, completion: nil)
+//    }
   }
   
   func fetchPlaylists () {
@@ -259,6 +270,11 @@ extension TrackOptionsViewController: UICollectionViewDataSource {
         }
         return headerView
       }
+    case UICollectionElementKindSectionFooter:
+      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+        footerView.activityIndicator.color = ColorPalette.gray
+        return footerView
+      }
     default: break
     }
     return UICollectionReusableView()
@@ -274,6 +290,13 @@ extension TrackOptionsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     if section == 1 {
       return CGSize(width: view.frame.width, height: 72)
+    }
+    return .zero
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    if section == 1, spotifyObject?.next != nil {
+      return CGSize(width: view.frame.width, height: 36)
     }
     return .zero
   }

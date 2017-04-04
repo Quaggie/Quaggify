@@ -9,11 +9,6 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-  
-  static var identifier: String {
-    return String(describing: self)
-  }
-  
   override var isHighlighted: Bool {
     didSet {
       alpha = isHighlighted ? 0.5 : 1

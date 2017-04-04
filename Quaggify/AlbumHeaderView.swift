@@ -9,10 +9,6 @@
 import UIKit
 
 class AlbumHeaderView: UICollectionReusableView {
-  static var identifier: String {
-    return String(describing: self)
-  }
-  
   var album: Album? {
     didSet {
       guard let album = album else {

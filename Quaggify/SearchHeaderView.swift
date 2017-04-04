@@ -9,11 +9,6 @@
 import UIKit
 
 class SearchHeaderView: UICollectionReusableView {
-  
-  static var identifier: String {
-    return String(describing: self)
-  }
-  
   var title = "" {
     didSet {
       titleLabel.text = title
