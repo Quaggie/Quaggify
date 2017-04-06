@@ -150,7 +150,8 @@ extension TrackViewController {
     trackOptionsVC.track = track
     
     let trackOptionsNav = NavigationController(rootViewController: trackOptionsVC)
-    present(trackOptionsNav, animated: true, completion: nil)
+    trackOptionsNav.modalPresentationStyle = .overCurrentContext
+    tabBarController?.present(trackOptionsNav, animated: true, completion: nil)
   }
   
   func fetchTrack () {

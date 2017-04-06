@@ -33,6 +33,7 @@ class TrackOptionsViewController: ViewController {
       collectionView.reloadData()
     }
   }
+  var isDismissing = false
   
   var limit = 20
   var offset = 0
@@ -105,16 +106,6 @@ extension TrackOptionsViewController {
 extension TrackOptionsViewController {
   func dismissModal () {
     dismiss(animated: true, completion: nil)
-//    if let tabBarVC = presentingViewController as? TabBarController, let navVC = tabBarVC.selectedViewController as? NavigationController {
-//      if let vc = navVC.childViewControllers.last {
-//        print(vc)
-//        vc.dismiss(animated: true, completion: nil)
-//      } else {
-//        dismiss(animated: true, completion: nil)
-//      }
-//    } else {
-//      dismiss(animated: true, completion: nil)
-//    }
   }
   
   func fetchPlaylists () {
@@ -216,6 +207,40 @@ extension TrackOptionsViewController: UICollectionViewDelegate {
     } else {
       let playlist = sections[safe: indexPath.section]?[safe: indexPath.item]
       addTrackToPlaylist(playlist: playlist)
+    }
+  }
+}
+
+extension TrackOptionsViewController: UIScrollViewDelegate {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if isDismissing {
+      return
+    }
+    let touchPoint = scrollView.contentOffset
+    print(touchPoint)
+    
+    // Change frame if user is scrolling up
+    if let navController = navigationController, let window = view.window, touchPoint.y < 0 {
+      navController.view.frame = CGRect(x: 0, y: -touchPoint.y, width: window.frame.size.width, height: window.frame.size.height)
+    } else {
+      // Only animate if it's not already on top
+      if let navController = self.navigationController, navController.view.frame.origin.y > 0 {
+        // Animate to top
+        UIView.animate(withDuration: 0.3) {
+          navController.view.frame = CGRect(x: 0, y: 0, width: navController.view.frame.size.width, height: navController.view.frame.size.height)
+        }
+      }
+    }
+  }
+  
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if let navController = navigationController, navController.view.frame.origin.y > 100 {
+      self.isDismissing = true
+      UIView.animate(withDuration: 0.3, animations: {
+        navController.view.frame.origin.y = navController.view.frame.height
+      }, completion: { _ in
+        self.dismiss(animated: false, completion: nil)
+      })
     }
   }
 }
