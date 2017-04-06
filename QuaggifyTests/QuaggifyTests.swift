@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Quaggify
+@testable import ObjectMapper
 
 class QuaggifyTests: XCTestCase {
   
@@ -16,50 +17,61 @@ class QuaggifyTests: XCTestCase {
   class FakeSpotifyService: SpotifyService {
     override func fetchSearchResults(query: String, completion: @escaping (SpotifySearchResponse?, Error?) -> Void) {
       
-      
-      let albumJson: JSON = [
-        "href": "https://api.spotify.com/v1/search?query=Behemoth&type=album&market=US&offset=0&limit=5",
-        "items": [
-          [:]
-        ]
+      var albumJson: JSON = [
+        "href": "https://api.spotify.com/v1/search?query=\(query)&type=album&market=US&offset=0&limit=1",
       ]
-      
-      let spotifySearchResponseJson: JSON = [
-        "albums": "",
-        "artists": "",
-        "tracks": "",
-        "playlists": ""
+      let items: JSON = [
+        "href": "https://api.spotify.com/v1/albums/7l0L2YHlQwAyI4QyZTIWGS",
+        "id": "7l0L2YHlQwAyI4QyZTIWGS",
       ]
-      let spotifySearchResponse = SpotifySearchResponse(JSON: spotifySearchResponseJson)
+      albumJson["items"] = items
       
-      completion(spotifySearchResponse, nil)
-    }
-  }
-    
-  override func setUp() {
-    super.setUp()
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-  
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    super.tearDown()
-  }
-  
-  func testExample() {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-  }
-  
-  func testPerformanceExample() {
-    // This is an example of a performance test case.
-    self.measure {
-      // Put the code you want to measure the time of here.
+      let album = SpotifyObject<Album>(JSON: albumJson)
+      
+      if let album = album {
+        let spotifySearchResponse = SpotifySearchResponse(JSON: ["albums": album])
+        completion(spotifySearchResponse, nil)
+      } else {
+        completion(nil, NSError(domain: "No search error", code: 111, userInfo: nil))
+      }
     }
   }
   
   func testSpotifySearch () {
+    let promise = expectation(description: "Search for behemoth on spotify")
+    let mockSearchResponse = SpotifySearchResponse(JSON: ["Teste": "123"])
     
+    API.fetchSearchResults(query: "behemoth", service: FakeSpotifyService.shared) { (spotifySearchResponse, error) in
+      
+      guard let mockSearchResponse = mockSearchResponse,
+        let spotifySearchResponse = spotifySearchResponse else {
+          XCTFail("Failed to unwrap response")
+          promise.fulfill()
+          return
+      }
+      XCTAssertNotEqual(mockSearchResponse, spotifySearchResponse)
+      promise.fulfill()
+    }
+    waitForExpectations(timeout: 10) { error in
+      if let error = error {
+        XCTFail("waitForExpectations errored: \(error)")
+      }
+    }
   }
   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

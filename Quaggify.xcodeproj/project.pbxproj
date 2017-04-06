@@ -447,8 +447,8 @@
 					};
 					E09CE86C1E409C9B002BF3F8 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 7397PXU582;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = ZPEUGUU6JH;
+						ProvisioningStyle = Manual;
 						TestTargetID = E09CE8551E409C9B002BF3F8;
 					};
 				};
@@ -816,11 +816,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 7397PXU582;
+				DEVELOPMENT_TEAM = ZPEUGUU6JH;
 				INFOPLIST_FILE = QuaggifyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.QuaggifyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quaggify.app/Quaggify";
 			};
@@ -832,11 +833,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 7397PXU582;
+				DEVELOPMENT_TEAM = ZPEUGUU6JH;
 				INFOPLIST_FILE = QuaggifyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quaggie.QuaggifyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quaggify.app/Quaggify";
 			};

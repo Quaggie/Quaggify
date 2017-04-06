@@ -56,3 +56,12 @@ struct SpotifySearchResponse: Mappable {
     playlists <- map["playlists"]
   }
 }
+
+extension SpotifySearchResponse: Equatable {
+  static func ==(lhs: SpotifySearchResponse, rhs: SpotifySearchResponse) -> Bool {
+    return lhs.albums == rhs.albums &&
+    lhs.artists == rhs.artists &&
+    lhs.playlists == rhs.playlists &&
+    lhs.tracks == rhs.tracks
+  }
+}

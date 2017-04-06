@@ -31,3 +31,15 @@ struct SpotifyObject<T: Mappable>: Mappable {
     items <- map["items"]
   }
 }
+
+extension SpotifyObject: Equatable {
+  static func ==(lhs: SpotifyObject<T>, rhs: SpotifyObject<T>) -> Bool {
+    return lhs.href == rhs.href &&
+    lhs.limit == rhs.limit &&
+    lhs.next == rhs.next &&
+    lhs.offset == rhs.offset &&
+    lhs.previous == rhs.previous &&
+    lhs.total == rhs.total &&
+    lhs.items?.count == rhs.items?.count
+  }
+}
