@@ -74,6 +74,7 @@
 		F438DB2B1E941AE7002E14A7 /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F438DB2A1E941AE7002E14A7 /* LoadingFooterView.swift */; };
 		F438DB2D1E941B18002E14A7 /* UICollectionReusableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F438DB2C1E941B18002E14A7 /* UICollectionReusableView+Extension.swift */; };
 		F4FFE9D21EE1A3F8007FFBD3 /* CellSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FFE9D11EE1A3F8007FFBD3 /* CellSpecs.swift */; };
+		F4FFE9D41EE1CEB4007FFBD3 /* InfiniteScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FFE9D31EE1CEB4007FFBD3 /* InfiniteScroll.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		F438DB2A1E941AE7002E14A7 /* LoadingFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
 		F438DB2C1E941B18002E14A7 /* UICollectionReusableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Extension.swift"; sourceTree = "<group>"; };
 		F4FFE9D11EE1A3F8007FFBD3 /* CellSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSpecs.swift; sourceTree = "<group>"; };
+		F4FFE9D31EE1CEB4007FFBD3 /* InfiniteScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScroll.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				F4FFE9D11EE1A3F8007FFBD3 /* CellSpecs.swift */,
+				F4FFE9D31EE1CEB4007FFBD3 /* InfiniteScroll.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				E0E385FA1E47CAE2002A72DD /* ArtistHeaderView.swift in Sources */,
 				E0E386041E4879B7002A72DD /* PlaylistHeaderView.swift in Sources */,
 				E060584F1E43E240003DEAB4 /* TracksViewController.swift in Sources */,
+				F4FFE9D41EE1CEB4007FFBD3 /* InfiniteScroll.swift in Sources */,
 				E0344DE71E41E8C600E7E585 /* ArtistCell.swift in Sources */,
 				E06058431E434068003DEAB4 /* LoginViewController.swift in Sources */,
 				E0841E481E41384700BEA51E /* UIView+Extension.swift in Sources */,

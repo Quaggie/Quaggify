@@ -8,10 +8,6 @@
 import UIKit
 
 protocol CellSpecs: class {
-  var limit: Int { get }
-  var offset: Int { get set }
-  var isFetching: Bool { get set }
-  
   var lineSpacing: CGFloat { get }
   var interItemSpacing: CGFloat { get }
   var contentInset: CGFloat { get }
@@ -22,6 +18,10 @@ protocol CellSpecs: class {
   var cellHeaderWidth: CGFloat { get }
   var cellFooterHeight: CGFloat { get }
   var cellFooterWidth: CGFloat { get }
+  
+  func cellInstance (_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
+  func headerInstance (_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView
+  func footerInstance (_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView
 }
 
 extension CellSpecs {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistViewController: ViewController, CellSpecs {
+class ArtistViewController: ViewController, InfiniteScroll, CellSpecs {
   
   var artist: Artist? {
     didSet {
@@ -42,6 +42,34 @@ class ArtistViewController: ViewController, CellSpecs {
   let cellFooterHeight: CGFloat = 0
   var cellFooterWidth: CGFloat {
     return view.frame.width
+  }
+  func cellInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.identifier, for: indexPath) as? AlbumCell {
+      let album = spotifyObject?.items?[safe: indexPath.item]
+      cell.album = album
+      
+      if let totalItems = spotifyObject?.items?.count, indexPath.item == totalItems - 1, spotifyObject?.next != nil {
+        if !isFetching {
+          fetchAlbums()
+        }
+      }
+      
+      return cell
+    }
+    return UICollectionViewCell()
+  }
+  func headerInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView {
+    if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ArtistHeaderView.identifier, for: indexPath) as? ArtistHeaderView {
+      headerView.artist = artist
+      return headerView
+    }
+    return UICollectionReusableView()
+  }
+  func footerInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView {
+    if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+      return footerView
+    }
+    return UICollectionReusableView()
   }
   
   fileprivate lazy var collectionView: UICollectionView = {
@@ -143,32 +171,13 @@ extension ArtistViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.identifier, for: indexPath) as? AlbumCell {
-      let album = spotifyObject?.items?[safe: indexPath.item]
-      cell.album = album
-      
-      if let totalItems = spotifyObject?.items?.count, indexPath.item == totalItems - 1, spotifyObject?.next != nil {
-        if !isFetching {
-          fetchAlbums()
-        }
-      }
-      
-      return cell
-    }
-    return UICollectionViewCell()
+    return cellInstance(collectionView, indexPath: indexPath)
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
-    case UICollectionElementKindSectionHeader:
-      if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ArtistHeaderView.identifier, for: indexPath) as? ArtistHeaderView {
-        headerView.artist = artist
-        return headerView
-      }
-    case UICollectionElementKindSectionFooter:
-      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
-        return footerView
-      }
+    case UICollectionElementKindSectionHeader: return headerInstance(collectionView, indexPath: indexPath)
+    case UICollectionElementKindSectionFooter: return footerInstance(collectionView, indexPath: indexPath)
     default: break
     }
     return UICollectionReusableView()

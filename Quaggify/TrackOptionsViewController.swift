@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrackOptionsViewController: ViewController, CellSpecs {
+class TrackOptionsViewController: ViewController, InfiniteScroll, CellSpecs {
   
   var track: Track? {
     didSet{
@@ -49,6 +49,51 @@ class TrackOptionsViewController: ViewController, CellSpecs {
   let cellFooterHeight: CGFloat = 36
   var cellFooterWidth: CGFloat {
     return view.frame.width
+  }
+  func cellInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCell.identifier, for: indexPath) as? PlaylistCell {
+      let section = indexPath.section
+      let playlist = sections[safe: section]?[safe: indexPath.item]
+      cell.playlist = playlist
+      cell.titleLabel.textColor = ColorPalette.black
+      
+      if section == 0 {
+        cell.imageView.image = #imageLiteral(resourceName: "icon_add_playlist").withRenderingMode(.alwaysTemplate)
+        cell.subTitleLabel.isHidden = true
+        cell.imageView.tintColor = ColorPalette.black
+      }
+      
+      // Only on the user's playlists
+      if  section == 1 {
+        if let totalItems = sections[safe: section]?.count, indexPath.item == totalItems - 1, spotifyObject?.next != nil {
+          if !isFetching {
+            fetchPlaylists()
+          }
+        }
+      }
+      
+      return cell
+    }
+    return UICollectionViewCell()
+  }
+  func headerInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView {
+    if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SearchHeaderView.identifier, for: indexPath) as? SearchHeaderView {
+      
+      if indexPath.section == 1 {
+        headerView.title = "Your playlists"
+        headerView.titleLabel.textColor = ColorPalette.black
+        headerView.titleLabel.font = Font.montSerratBold(size: 20)
+      }
+      return headerView
+    }
+    return UICollectionReusableView()
+  }
+  func footerInstance(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionReusableView {
+    if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+      footerView.activityIndicator.color = ColorPalette.gray
+      return footerView
+    }
+    return UICollectionReusableView()
   }
   
   fileprivate lazy var closeModalButton: UIBarButtonItem = {
@@ -268,50 +313,14 @@ extension TrackOptionsViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistCell.identifier, for: indexPath) as? PlaylistCell {
-      let section = indexPath.section
-      let playlist = sections[safe: section]?[safe: indexPath.item]
-      cell.playlist = playlist
-      cell.titleLabel.textColor = ColorPalette.black
-      
-      if section == 0 {
-        cell.imageView.image = #imageLiteral(resourceName: "icon_add_playlist").withRenderingMode(.alwaysTemplate)
-        cell.subTitleLabel.isHidden = true
-        cell.imageView.tintColor = ColorPalette.black
-      }
-      
-      // Only on the user's playlists
-      if  section == 1 {
-        if let totalItems = sections[safe: section]?.count, indexPath.item == totalItems - 1, spotifyObject?.next != nil {
-          if !isFetching {
-            fetchPlaylists()
-          }
-        }
-      }
-      
-      return cell
-    }
-    return UICollectionViewCell()
+    return cellInstance(collectionView, indexPath: indexPath)
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     
     switch kind {
-    case UICollectionElementKindSectionHeader:
-      if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SearchHeaderView.identifier, for: indexPath) as? SearchHeaderView {
-        
-        if indexPath.section == 1 {
-          headerView.title = "Your playlists"
-          headerView.titleLabel.textColor = ColorPalette.black
-          headerView.titleLabel.font = Font.montSerratBold(size: 20)
-        }
-        return headerView
-      }
-    case UICollectionElementKindSectionFooter:
-      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
-        footerView.activityIndicator.color = ColorPalette.gray
-        return footerView
-      }
+    case UICollectionElementKindSectionHeader: return headerInstance(collectionView, indexPath: indexPath)
+    case UICollectionElementKindSectionFooter: return footerInstance(collectionView, indexPath: indexPath)
     default: break
     }
     return UICollectionReusableView()
