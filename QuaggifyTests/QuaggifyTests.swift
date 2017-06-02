@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Quaggify
 @testable import ObjectMapper
 
 class QuaggifyTests: XCTestCase {

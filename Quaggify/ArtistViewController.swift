@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistViewController: ViewController {
+class ArtistViewController: ViewController, CellSpecs {
   
   var artist: Artist? {
     didSet {
@@ -22,17 +22,29 @@ class ArtistViewController: ViewController {
     }
   }
 
-  var spotifyObject: SpotifyObject<Album>?
-  
-  var limit = 20
+  fileprivate var spotifyObject: SpotifyObject<Album>?
+
+  let limit = 20
   var offset = 0
   var isFetching = false
   
   let lineSpacing: CGFloat = 16
   let interItemSpacing: CGFloat = 8
   let contentInset: CGFloat = 8
+  let cellHeight: CGFloat = 72
+  var cellWidth: CGFloat {
+    return view.frame.width - (contentInset * 2)
+  }
+  let cellHeaderHeight: CGFloat = 220
+  var cellHeaderWidth: CGFloat {
+    return view.frame.width
+  }
+  let cellFooterHeight: CGFloat = 0
+  var cellFooterWidth: CGFloat {
+    return view.frame.width
+  }
   
-  lazy var collectionView: UICollectionView = {
+  fileprivate lazy var collectionView: UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = .vertical
     flowLayout.minimumLineSpacing = self.lineSpacing
@@ -47,6 +59,7 @@ class ArtistViewController: ViewController {
     cv.dataSource = self
     cv.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.identifier)
     cv.register(ArtistHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ArtistHeaderView.identifier)
+    cv.register(LoadingFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier)
     return cv
   }()
   
@@ -152,6 +165,10 @@ extension ArtistViewController: UICollectionViewDataSource {
         headerView.artist = artist
         return headerView
       }
+    case UICollectionElementKindSectionFooter:
+      if let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: LoadingFooterView.identifier, for: indexPath) as? LoadingFooterView {
+        return footerView
+      }
     default: break
     }
     return UICollectionReusableView()
@@ -160,11 +177,15 @@ extension ArtistViewController: UICollectionViewDataSource {
 
 extension ArtistViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width - (contentInset * 2), height: 72)
+    return cellSize
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return CGSize(width: view.frame.width, height: 220)
+    return cellHeaderSize
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    return cellFooterSize
   }
 }
 

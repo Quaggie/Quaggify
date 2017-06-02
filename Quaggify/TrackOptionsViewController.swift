@@ -8,11 +8,7 @@
 
 import UIKit
 
-class TrackOptionsViewController: ViewController {
-  
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .default
-  }
+class TrackOptionsViewController: ViewController, CellSpecs {
   
   var track: Track? {
     didSet{
@@ -22,34 +18,46 @@ class TrackOptionsViewController: ViewController {
     }
   }
   
-  var spotifyObject: SpotifyObject<Playlist>? {
+  fileprivate var spotifyObject: SpotifyObject<Playlist>? {
     didSet {
       collectionView.reloadData()
     }
   }
   
-  var sections: [[Playlist]] = [] {
+  fileprivate var sections: [[Playlist]] = [] {
     didSet {
       collectionView.reloadData()
     }
   }
   var isDismissing = false
   
-  var limit = 20
+  let limit = 20
   var offset = 0
   var isFetching = false
   
-  lazy var closeModalButton: UIBarButtonItem = {
+  let lineSpacing: CGFloat = 16
+  let interItemSpacing: CGFloat = 8
+  let contentInset: CGFloat = 8
+  let cellHeight: CGFloat = 72
+  var cellWidth: CGFloat {
+    return view.frame.width - (contentInset * 2)
+  }
+  let cellHeaderHeight: CGFloat = 72
+  var cellHeaderWidth: CGFloat {
+    return view.frame.width
+  }
+  let cellFooterHeight: CGFloat = 36
+  var cellFooterWidth: CGFloat {
+    return view.frame.width
+  }
+  
+  fileprivate lazy var closeModalButton: UIBarButtonItem = {
     let button = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_remove"), style: .plain, target: self, action: #selector(dismissModal))
     button.tintColor = ColorPalette.black
     return button
   }()
   
-  let lineSpacing: CGFloat = 16
-  let interItemSpacing: CGFloat = 8
-  let contentInset: CGFloat = 8
-  
-  lazy var collectionView: UICollectionView = {
+  fileprivate lazy var collectionView: UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = .vertical
     flowLayout.minimumLineSpacing = self.lineSpacing
@@ -73,6 +81,10 @@ class TrackOptionsViewController: ViewController {
     setupViews()
     setupNavigationBar()
     fetchPlaylists()
+  }
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .default
   }
   
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -309,19 +321,19 @@ extension TrackOptionsViewController: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegateFlowLayout
 extension TrackOptionsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width - (contentInset * 2), height: 72)
+    return cellSize
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     if section == 1 {
-      return CGSize(width: view.frame.width, height: 72)
+      return cellHeaderSize
     }
     return .zero
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
     if section == 1, spotifyObject?.next != nil {
-      return CGSize(width: view.frame.width, height: 36)
+      return cellFooterSize
     }
     return .zero
   }

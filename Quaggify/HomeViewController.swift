@@ -52,6 +52,7 @@ class HomeViewController: ViewController {
     super.viewDidLoad()
     setupViews()
     fetchAlbums()
+    setup3dTouch()
   }
   
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -65,6 +66,12 @@ class HomeViewController: ViewController {
     
     view.addSubview(collectionView)
     collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+  }
+  
+  func setup3dTouch () {
+    if traitCollection.forceTouchCapability == .available {
+      registerForPreviewing(with: self, sourceView: view)
+    }
   }
 }
 
@@ -210,6 +217,26 @@ extension HomeViewController: ScrollDelegate {
     if spotifyObject?.items?.count ?? 0 > 0 {
       collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
     }
+  }
+}
+
+extension HomeViewController: UIViewControllerPreviewingDelegate {
+  func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    guard let indexPath = collectionView.indexPathForItem(at: location),
+    let cell = collectionView.cellForItem(at: indexPath) else {
+      return nil
+    }
+    let albumVC = AlbumViewController()
+    albumVC.preferredContentSize = CGSize(width: 0.0, height: 600)
+    let album = spotifyObject?.items?[safe: indexPath.item]
+    albumVC.album = album
+    
+    previewingContext.sourceRect = cell.frame
+    return albumVC
+  }
+  
+  func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+    show(viewControllerToCommit, sender: self)
   }
 }
 

@@ -11,8 +11,8 @@ import Alamofire
 import AlamofireObjectMapper
 
 class SpotifyService: NSObject {
-  let CLIENT_ID = "{ INSERT CLIENT_ID HERE }"
-  let CLIENT_SECRET = "{ INSERT CLIENT_SECRET HERE }"
+  let CLIENT_ID = "dd5e3b1b86fa45fea060fd431f4cb951"
+  let CLIENT_SECRET = "3fe421ffac364af3bc5014d2c4c24e98"
   let REDIRECT_URI = "quaggify://authorization"
   
   var AUTHORIZATION_CODE: String? {
@@ -97,6 +97,8 @@ class SpotifyService: NSObject {
     if let url = URL(string: urlString) {
       if UIApplication.shared.canOpenURL(url) {
         UIApplication.shared.openURL(url)
+      } else {
+        Alert.shared.show(title: "Attetion", message: "Please insert valid spotify credentials (:")
       }
     }
   }
