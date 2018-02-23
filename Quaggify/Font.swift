@@ -16,6 +16,6 @@ struct Font {
     return UIFont(name: Font.montSerratRegularName, size: size) ?? UIFont.systemFont(ofSize: size)
   }
   static func montSerratBold (size: CGFloat) -> UIFont? {
-    return UIFont(name: Font.montSerratBoldName, size: size) ?? UIFont.systemFont(ofSize: size, weight: 0.4)
+    return UIFont(name: Font.montSerratBoldName, size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.4))
   }
 }

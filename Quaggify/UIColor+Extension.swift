@@ -16,7 +16,7 @@ extension UIColor {
       cString = (cString as NSString).substring(from: 1)
     }
     
-    if (cString.characters.count != 6) {
+    if (cString.count != 6) {
       self.init(white: 0.5, alpha: 1.0)
     } else {
       let rString: String = (cString as NSString).substring(to: 2)

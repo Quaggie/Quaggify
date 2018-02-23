@@ -96,7 +96,7 @@ class SpotifyService: NSObject {
     let urlString = "https://accounts.spotify.com/authorize?client_id=\(SpotifyService.shared.CLIENT_ID)&response_type=code&redirect_uri=\(SpotifyService.shared.REDIRECT_URI)&scope=\(encodedScopes)"
     if let url = URL(string: urlString) {
       if UIApplication.shared.canOpenURL(url) {
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
       }
     }
   }

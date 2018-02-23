@@ -97,14 +97,14 @@ extension TrackOptionsViewController {
     navigationItem.leftBarButtonItem = closeModalButton
     navigationItem.title = "Add to Playlist".uppercased()
     if let titleFont = Font.montSerratRegular(size: 16) {
-      navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: ColorPalette.black]
+      navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: titleFont, NSAttributedStringKey.foregroundColor: ColorPalette.black]
     }
   }
 }
 
 // MARK: Actions
 extension TrackOptionsViewController {
-  func dismissModal () {
+  @objc func dismissModal () {
     dismiss(animated: true, completion: nil)
   }
   
@@ -172,7 +172,7 @@ extension TrackOptionsViewController {
     present(alertController, animated: true, completion: nil)
   }
   
-  func textDidChange (textField: UITextField) {
+  @objc func textDidChange (textField: UITextField) {
     if let topVc = UIApplication.topViewController() as? UIAlertController, let createAction = topVc.actions[safe: 1] {
       if let text = textField.text, text != "" {
         createAction.isEnabled = true

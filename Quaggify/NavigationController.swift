@@ -17,7 +17,7 @@ class NavigationController: UINavigationController {
     navigationBar.tintColor = .white
     
     if let titleFont = Font.montSerratRegular(size: 16) {
-      navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont]
+      navigationBar.titleTextAttributes = [NSAttributedStringKey.font: titleFont]
     }
   }
 }

@@ -88,7 +88,7 @@ extension LibraryViewController {
     }
   }
   
-  func logout () {
+  @objc func logout () {
     SpotifyService.shared.logout()
   }
   
@@ -96,7 +96,7 @@ extension LibraryViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(onUserPlaylistUpdate), name: .onUserPlaylistUpdate, object: nil)
   }
   
-  func onUserPlaylistUpdate (notification: Notification) {
+  @objc func onUserPlaylistUpdate (notification: Notification) {
     guard let playlist = notification.object as? Playlist else {
       return
     }
@@ -128,7 +128,7 @@ extension LibraryViewController {
     }
   }
   
-  func refreshPlaylists () {
+  @objc func refreshPlaylists () {
     if isFetching {
       return
     }
@@ -186,7 +186,7 @@ extension LibraryViewController {
     present(alertController, animated: true, completion: nil)
   }
   
-  func textDidChange (textField: UITextField) {
+  @objc func textDidChange (textField: UITextField) {
     if let topVc = UIApplication.topViewController() as? UIAlertController, let createAction = topVc.actions[safe: 1] {
       if let text = textField.text, text != "" {
         createAction.isEnabled = true

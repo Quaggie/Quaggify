@@ -54,7 +54,7 @@ class RecentSearchesCell: CollectionViewCell {
     removeButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 0)
   }
   
-  func removeRecentSearch () {
+  @objc func removeRecentSearch () {
     if let title = title {
       RecentSearches.shared.remove(search: title)
     }

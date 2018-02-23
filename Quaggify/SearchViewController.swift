@@ -124,7 +124,7 @@ class SearchViewController: ViewController {
 
 // MARK: Actions
 extension SearchViewController {
-  func fetchSearchResults () {
+  @objc func fetchSearchResults () {
     // Api call
     if let text = searchController.searchBar.text {
       API.fetchSearchResults(query: text) { [weak self] (response, error) in

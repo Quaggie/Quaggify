@@ -65,6 +65,14 @@ class HomeViewController: ViewController {
     
     view.addSubview(collectionView)
     collectionView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    
+//    let playerView = UIView()
+//    playerView.backgroundColor = ColorPalette.lightGray
+//    
+//    let keyWindow = UIApplication.shared.keyWindow
+//    let tabBarHeight = tabBarController?.tabBar.frame.height ?? 44
+//    keyWindow?.addSubview(playerView)
+//    playerView.anchor(nil, left: keyWindow?.leftAnchor, bottom: keyWindow?.bottomAnchor, right: keyWindow?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: tabBarHeight, rightConstant: 0, widthConstant: 0, heightConstant: 44)
   }
 }
 
@@ -100,7 +108,7 @@ extension HomeViewController {
     }
   }
   
-  func refreshAlbums () {
+  @objc func refreshAlbums () {
     if isFetching {
       return
     }

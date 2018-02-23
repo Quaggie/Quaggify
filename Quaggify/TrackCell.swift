@@ -89,13 +89,13 @@ class TrackCell: CollectionViewCell {
     moreButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 56, heightConstant: 0)
   }
   
-  func onHold (sender : UIGestureRecognizer) {
+  @objc func onHold (sender : UIGestureRecognizer) {
     if sender.state == .began {
       showTrackOptions()
     }
   }
   
-  func showTrackOptions () {
+  @objc func showTrackOptions () {
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     if let name = track?.name {
       alertController.title = name
@@ -126,9 +126,9 @@ class TrackCell: CollectionViewCell {
       
       alertController.addAction(UIAlertAction(title: "Open in Spotify", style: .default) { [weak self] _ in
         if let uri = self?.track?.uri, let url = URL(string: uri), UIApplication.shared.canOpenURL(url) {
-          UIApplication.shared.openURL(url)
+          UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else if let href = self?.track?.externalUrls?.spotify, let url = URL(string: href), UIApplication.shared.canOpenURL(url) {
-          UIApplication.shared.openURL(url)
+          UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
       })
       

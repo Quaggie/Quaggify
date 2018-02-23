@@ -145,7 +145,7 @@ extension TrackViewController {
 
 // MARK: Actions
 extension TrackViewController {
-  func addToPlaylist () {
+  @objc func addToPlaylist () {
     let trackOptionsVC = TrackOptionsViewController()
     trackOptionsVC.track = track
     

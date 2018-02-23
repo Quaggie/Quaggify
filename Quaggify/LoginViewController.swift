@@ -37,7 +37,7 @@ class LoginViewController: ViewController {
     setupViews()
   }
   
-  func login () {
+  @objc func login () {
     SpotifyService.shared.login()
   }
   
